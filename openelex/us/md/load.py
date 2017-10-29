@@ -268,7 +268,7 @@ class MDLoader(MDBaseLoader):
 
 
 class MDLoader2002(MDBaseLoader):
-    """
+    r"""
     Loads Maryland results for 2002.
 
     Format:
@@ -299,7 +299,6 @@ class MDLoader2002(MDBaseLoader):
     In the general election file, there are rows for judges and for
     "Statewide Ballot Questions".  The columns in these rows are shifted over,
     but we can ignore these rows since we're not interested in these offices.
-
     """
 
     def load(self):
@@ -322,7 +321,7 @@ class MDLoader2002(MDBaseLoader):
         results = []
 
         with self._file_handle as csvfile:
-            reader = unicodecsv.DictReader(csvfile, fieldnames = headers, delimiter='|', encoding='latin-1')
+            reader = unicodecsv.DictReader(csvfile, fieldnames=headers, delimiter='|', encoding='latin-1')
             for row in reader:
                 if self._skip_row(row):
                     continue

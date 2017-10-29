@@ -1,6 +1,6 @@
 from future import standard_library
 standard_library.install_aliases()
-from builtins import object
+from builtins import object, open
 import getpass
 import glob
 import os.path
@@ -207,7 +207,7 @@ class GitHubPublisher(BasePublisher):
         post_publish = signal('post_publish')
         pre_publish.send(self.__class__, filename=filename)
         path = self.get_path(filename)
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf-8') as f:
             content = f.read()
             sha = self.get_sha(repo, path, branch)
             if sha:

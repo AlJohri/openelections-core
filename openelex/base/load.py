@@ -90,8 +90,8 @@ class BaseLoader(StateBase):
         mappings based on OCD ids"
         """
         filename = join(self.mappings_dir, self.state+'.csv')
-        with open(filename, 'rU') as csvfile:
-            reader = unicodecsv.DictReader(csvfile, fieldnames = headers)
+        with open(filename, 'rb') as csvfile:
+            reader = unicodecsv.DictReader(csvfile, fieldnames=headers, encoding='utf-8')
             mappings = json.dumps([row for row in reader])
         return json.loads(mappings)
 
@@ -99,7 +99,7 @@ class BaseLoader(StateBase):
 
     @property
     def _file_handle(self):
-        return open(join(self.cache.abspath, self.source), 'rU')
+        return open(join(self.cache.abspath, self.source), 'rb')
 
     @property
     def _xls_file_path(self):

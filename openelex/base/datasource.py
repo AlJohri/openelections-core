@@ -232,9 +232,8 @@ class BaseDatasource(StateBase):
         except AttributeError:
             if filename is None:
                 filename = join(self.mappings_dir, self.state + '.csv')
-
-            with open(filename, 'rU') as csvfile:
-                reader = unicodecsv.DictReader(csvfile)
+            with open(filename, 'rb') as csvfile:
+                reader = unicodecsv.DictReader(csvfile, encoding='utf-8')
                 self._cached_jurisdiction_mappings = [row for row in reader]
 
             return self._cached_jurisdiction_mappings
@@ -246,8 +245,8 @@ class BaseDatasource(StateBase):
             if filename is None:
                 filename = join(self.mappings_dir, self.state + '_places.csv')
 
-            with open(filename, 'rU') as csvfile:
-                reader = unicodecsv.DictReader(csvfile)
+            with open(filename, 'rb') as csvfile:
+                reader = unicodecsv.DictReader(csvfile, encoding='utf-8')
                 self._cached_place_mappings = [row for row in reader]
 
             return self._cached_place_mappings
@@ -322,8 +321,8 @@ class BaseDatasource(StateBase):
             return self._cached_url_paths[filename]
         except KeyError:
             cached = self._cached_url_paths[filename] = []
-            with open(filename, 'rU') as csvfile:
-                reader = unicodecsv.DictReader(csvfile)
+            with open(filename, 'rb') as csvfile:
+                reader = unicodecsv.DictReader(csvfile, encoding='utf-8')
                 for row in reader:
                     cached.append(self._parse_url_path(row))
             return cached

@@ -26,11 +26,12 @@ class TestMappings(TestCase):
         expected_2000 = {
             'election': u'md-2000-11-07-general',
             'generated_filename': u'20001107__md__general__state_legislative.csv',
-            'name': 'State Legislative Districts',
-            'ocd_id': 'ocd-division/country:us/state:md/sldl:all',
-            'raw_url': 'http://www.elections.state.md.us/elections/2000/election_data/State_Legislative_Districts_General_2000.csv'
+            'name': u'State Legislative Districts',
+            'ocd_id': u'ocd-division/country:us/state:md/sldl:all',
+            'raw_url': u'http://www.elections.state.md.us/elections/2000/election_data/State_Legislative_Districts_General_2000.csv'
         }
-        self.assertDictEqual(expected_2000, mappings[0])
+        actual_2000 = [x for x in mappings if x['election'] == expected_2000['election'] and x['generated_filename'] == expected_2000['generated_filename']][0]
+        self.assertDictEqual(expected_2000, actual_2000)
         expected_2012 = {
             'election': u'md-2012-04-03-primary',
             'generated_filename': u'20120403__md__republican__primary__baltimore_city.csv',
@@ -38,7 +39,8 @@ class TestMappings(TestCase):
             'ocd_id': u'ocd-division/country:us/state:md/place:baltimore',
             'raw_url': u'http://www.elections.state.md.us/elections/2012/election_data/Baltimore_City_County_Republican_2012_Primary.csv'
         }
-        self.assertDictEqual(expected_2012, mappings[-1])
+        actual_2012 = [x for x in mappings if x['election'] == expected_2012['election'] and x['generated_filename'] == expected_2012['generated_filename']][0]
+        self.assertDictEqual(expected_2012, actual_2012)
 
     @patch('openelex.base.datasource.elec_api.find')
     def test_mappings_filtered_by_year(self, mock_elec_find):
@@ -214,9 +216,9 @@ class TestSourceUrlBuilder(TestCase):
 
     def test_2002_source_urls(self):
         self.assertListEqual(
-            ["http://www.elections.state.md.us/elections/2002/results/p_all_offices.txt",
-            "http://www.elections.state.md.us/elections/2002/results/g_all_offices.txt"],
-            self.datasource._get_2002_source_urls()
+            ["http://www.elections.state.md.us/elections/2002/results/g_all_offices.txt",
+            "http://www.elections.state.md.us/elections/2002/results/p_all_offices.txt"],
+            sorted(self.datasource._get_2002_source_urls())
         )
         self.assertEquals(
             "http://www.elections.state.md.us/elections/2002/results/g_all_offices.txt",

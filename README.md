@@ -2,9 +2,6 @@
 
 Core repo for election results data acquisition, transformation and output.
 
-OpenElections core is developed and tested using Python 2.7.*. The package
-might not work with older or newer Python distributions.
-
 ### Getting started as a developer
 
 You'll:
@@ -47,7 +44,7 @@ $ cd openelections-core
 Turn setup and activate the virtual environment from the previous step, if you haven't already:
 
 ```bash
-$ pipenv install --python 2.7 --dev
+$ pipenv install --dev
 $ pipenv shell
 ```
 
